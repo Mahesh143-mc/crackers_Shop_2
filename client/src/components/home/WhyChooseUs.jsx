@@ -48,7 +48,7 @@ const reasons = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-20 bg-[#05100a] relative border-t border-white/5 overflow-hidden">
+    <section className="py-20 bg-[var(--bg-whyus)] relative border-t border-white/5 overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-orange-500/10 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -60,7 +60,7 @@ const WhyChooseUs = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight"
+            className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white mb-4 tracking-tight"
           >
             Why Choose <span className="text-orange-500">Us?</span>
           </motion.h2>
@@ -69,7 +69,7 @@ const WhyChooseUs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-zinc-400 text-lg"
+            className="text-zinc-600 dark:text-zinc-400 text-lg"
           >
             We are committed to making your celebrations safe, bright, and memorable.
           </motion.p>
@@ -83,15 +83,15 @@ const WhyChooseUs = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-zinc-950 border border-zinc-800 hover:border-zinc-700 p-8 rounded-3xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group"
+              className="bg-white/60 dark:bg-zinc-950 border border-orange-500/10 dark:border-zinc-800 hover:border-orange-500/30 dark:hover:border-zinc-700 p-8 rounded-3xl transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none hover:shadow-xl dark:hover:shadow-2xl hover:-translate-y-1 group backdrop-blur-sm"
             >
               <div className={`w-14 h-14 rounded-2xl ${reason.bg} flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform duration-300`}>
                 <reason.icon className={`h-7 w-7 ${reason.color}`} />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-3 group-hover:text-orange-400 transition-colors">
                 {reason.title}
               </h3>
-              <p className="text-zinc-400 leading-relaxed">
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 {reason.desc}
               </p>
             </motion.div>

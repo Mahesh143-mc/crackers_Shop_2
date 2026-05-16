@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 @layer base {
   :root {
     --color-primary-50: #fff7ed;
@@ -7,24 +10,69 @@
     --color-primary-500: #f97316;
     --color-primary-600: #ea580c;
     --color-primary-700: #c2410c;
+
+    /* Theme Variables - Light Mode (Festive & Warm) */
+    --bg-main: #fffdfa;
+    --bg-card: #fff5ec;
+    --text-main: #18181b;
+    --text-muted: #52525b;
+    --border-main: #ffedd5;
+    
+    /* Section specific backgrounds for Light Mode */
+    --bg-hero: #fff6ed;
+    --bg-categories: #fffdfa;
+    --bg-bestselling: #fff3f3;
+    --bg-offers: #fffaee;
+    --bg-whyus: #fcfcf9;
+    --bg-analytics: #f0fdfa;
+    --bg-pos: #fffdfa;
+    --bg-reviews: #fff1f2;
+    --bg-delivery: #f8fafc;
+    --bg-faq: #fafaf9;
+    --bg-newsletter: #ffffff;
+    --bg-contact: #fff7ed;
+  }
+
+  .dark {
+    /* Theme Variables - Dark Mode */
+    --bg-main: #050505;
+    --bg-card: #0a0a0a;
+    --text-main: #ffffff;
+    --text-muted: #a1a1aa;
+    --border-main: #27272a;
+    
+    /* Section specific backgrounds for Dark Mode */
+    --bg-hero: #050510;
+    --bg-categories: #0a0a12;
+    --bg-bestselling: #0d0a0f;
+    --bg-offers: #08081a;
+    --bg-whyus: #05100a;
+    --bg-analytics: #050a15;
+    --bg-pos: #0a0d12;
+    --bg-reviews: #10050a;
+    --bg-delivery: #0a0d1a;
+    --bg-faq: #080808;
+    --bg-newsletter: #050505;
+    --bg-contact: #09090b;
   }
 }
 
 :root {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color-scheme: dark;
+  color-scheme: light dark;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #09090b; /* zinc-950 */
-  color: #fafafa; /* zinc-50 */
+  background-color: var(--bg-main);
+  color: var(--text-main);
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -61,12 +109,19 @@ body {
 }
 
 .glass-card {
-  background-color: rgba(24, 24, 27, 0.4);
+  background-color: var(--bg-card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-main);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-card {
+  background-color: rgba(24, 24, 27, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
+
 
 .glow-orange {
   box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);

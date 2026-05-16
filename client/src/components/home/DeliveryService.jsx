@@ -38,7 +38,7 @@ const steps = [
 
 const DeliveryService = () => {
   return (
-    <section className="py-24 bg-[#0a0d1a] relative border-t border-zinc-900">
+    <section className="py-24 bg-[var(--bg-delivery)] relative border-t border-black/5 dark:border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -46,7 +46,7 @@ const DeliveryService = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight"
+            className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white mb-4 tracking-tight"
           >
             How It <span className="text-orange-500">Works</span>
           </motion.h2>
@@ -55,15 +55,14 @@ const DeliveryService = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-zinc-400 text-lg"
+            className="text-zinc-600 dark:text-zinc-400 text-lg"
           >
             From our warehouse to your home. We ensure a smooth, safe, and transparent delivery process.
           </motion.p>
         </div>
 
         <div className="relative">
-          {/* Connecting Line (Desktop) */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-zinc-800 -translate-y-1/2 z-0"></div>
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-black/5 dark:bg-zinc-800 -translate-y-1/2 z-0"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {steps.map((step, index) => (
@@ -73,9 +72,9 @@ const DeliveryService = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
-                className="relative bg-zinc-950 border border-zinc-800 rounded-3xl p-6 text-center shadow-xl hover:-translate-y-2 transition-transform duration-300"
+                className="relative bg-white dark:bg-zinc-950 border border-black/5 dark:border-zinc-800 rounded-3xl p-6 text-center shadow-lg hover:-translate-y-2 transition-transform duration-300"
               >
-                <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold font-mono border-4 border-zinc-950">
+                <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-bold font-mono border-4 border-white dark:border-zinc-950">
                   {step.id}
                 </div>
                 
@@ -83,8 +82,8 @@ const DeliveryService = () => {
                   <step.icon className={`h-10 w-10 ${step.color}`} />
                 </div>
                 
-                <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">{step.desc}</p>
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">{step.title}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>

@@ -16,7 +16,7 @@ const Newsletter = () => {
   };
 
   return (
-    <section className="py-24 bg-[#050505] relative overflow-hidden border-t border-zinc-900">
+    <section className="py-24 bg-[var(--bg-newsletter)] relative overflow-hidden border-t border-black/5 dark:border-zinc-900">
       {/* Decorative Effects */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px] pointer-events-none"></div>
       
@@ -25,7 +25,7 @@ const Newsletter = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-3xl p-8 md:p-12 text-center shadow-2xl relative overflow-hidden"
+          className="bg-white/60 dark:bg-zinc-900/50 backdrop-blur-xl border border-black/5 dark:border-zinc-800 rounded-3xl p-8 md:p-12 text-center shadow-[0_20px_50px_rgb(0,0,0,0.05)] dark:shadow-2xl relative overflow-hidden"
         >
           {/* Subtle Grid Background inside the card */}
           <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
@@ -34,10 +34,10 @@ const Newsletter = () => {
             <Mail className="h-8 w-8 text-orange-500" />
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-4 relative z-10">
+          <h2 className="text-3xl md:text-4xl font-black text-zinc-900 dark:text-white mb-4 relative z-10">
             Get Festival Offers & <span className="text-orange-500">Exclusive Discounts</span>
           </h2>
-          <p className="text-zinc-400 text-lg mb-8 max-w-2xl mx-auto relative z-10">
+          <p className="text-zinc-600 dark:text-zinc-400 text-lg mb-8 max-w-2xl mx-auto relative z-10">
             Subscribe to our newsletter to receive early access to mega sales, new product announcements, and special wholesale pricing.
           </p>
 
@@ -49,7 +49,7 @@ const Newsletter = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-800 text-white px-6 py-4 rounded-full pr-36 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                className="w-full bg-white dark:bg-zinc-950 border border-black/10 dark:border-zinc-800 text-zinc-900 dark:text-white px-6 py-4 rounded-full pr-36 shadow-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
               />
               <button 
                 type="submit"

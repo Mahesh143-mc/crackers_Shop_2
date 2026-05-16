@@ -24,7 +24,7 @@ const BestSelling = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-[#0d0a0f] relative overflow-hidden border-t border-white/5">
+    <section className="py-24 bg-[var(--bg-bestselling)] relative overflow-hidden border-t border-white/5">
       {/* Vibrant Background Glows */}
       <div className="absolute top-1/2 left-0 w-64 h-64 bg-pink-600/10 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -37,7 +37,7 @@ const BestSelling = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/20 text-red-400 text-xs font-black uppercase tracking-widest mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-xs font-black uppercase tracking-widest mb-6"
             >
               <Flame className="h-4 w-4 animate-pulse" />
               <span>Trending Now</span>
@@ -47,18 +47,18 @@ const BestSelling = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter"
+              className="text-4xl md:text-6xl font-black text-zinc-900 dark:text-white mb-6 tracking-tighter"
             >
               BEST SELLING <span className="vibrant-gradient-text">PRODUCTS</span>
             </motion.h2>
-            <p className="text-zinc-400 text-lg md:text-xl font-medium">
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl font-medium">
               Hand-picked premium crackers loved by thousands of happy families.
             </p>
           </div>
 
           <Link 
             to="/products"
-            className="group inline-flex items-center justify-center bg-zinc-900/50 backdrop-blur-md border border-white/10 hover:border-orange-500/50 hover:bg-zinc-800 text-white px-8 py-4 rounded-full font-black transition-all gap-2 whitespace-nowrap"
+            className="group inline-flex items-center justify-center bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-orange-500/20 dark:border-white/10 hover:border-orange-500/50 hover:bg-orange-50 dark:hover:bg-zinc-800 text-orange-900 dark:text-white px-8 py-4 rounded-full font-black transition-all gap-2 whitespace-nowrap shadow-sm dark:shadow-none"
           >
             Explore All <Sparkles className="h-5 w-5 text-yellow-500 group-hover:rotate-12 transition-transform" />
           </Link>

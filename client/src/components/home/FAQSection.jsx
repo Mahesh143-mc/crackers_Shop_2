@@ -29,7 +29,7 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="py-24 bg-[#080808] relative border-t border-white/5">
+    <section className="py-24 bg-[var(--bg-faq)] relative border-t border-black/5 dark:border-white/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
@@ -37,7 +37,7 @@ const FAQSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-bold mb-4"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 dark:bg-zinc-800 border border-black/10 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 text-xs font-bold mb-4"
           >
             <HelpCircle className="h-4 w-4" />
             <span>Support</span>
@@ -48,7 +48,7 @@ const FAQSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight"
+            className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white mb-4 tracking-tight"
           >
             Frequently Asked <span className="text-orange-500">Questions</span>
           </motion.h2>
@@ -62,14 +62,14 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden transition-colors hover:border-zinc-700"
+              className="bg-white/60 dark:bg-zinc-900 border border-black/5 dark:border-zinc-800 rounded-2xl overflow-hidden transition-colors hover:border-orange-500/30 dark:hover:border-zinc-700 shadow-sm dark:shadow-none backdrop-blur-sm"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between p-6 text-left"
               >
-                <span className="text-lg font-bold text-white pr-4">{faq.question}</span>
-                <div className={`p-2 rounded-full bg-zinc-800 transition-transform duration-300 ${openIndex === index ? 'rotate-180 bg-orange-500/20 text-orange-500' : 'text-zinc-400'}`}>
+                <span className="text-lg font-bold text-zinc-900 dark:text-white pr-4">{faq.question}</span>
+                <div className={`p-2 rounded-full transition-transform duration-300 ${openIndex === index ? 'rotate-180 bg-orange-500/20 text-orange-500' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'}`}>
                   <ChevronDown className="h-5 w-5" />
                 </div>
               </button>
@@ -82,7 +82,7 @@ const FAQSection = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="px-6 pb-6 text-zinc-400 leading-relaxed border-t border-zinc-800/50 pt-4">
+                    <div className="px-6 pb-6 text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-black/5 dark:border-zinc-800/50 pt-4">
                       {faq.answer}
                     </div>
                   </motion.div>

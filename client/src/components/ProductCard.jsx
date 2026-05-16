@@ -10,9 +10,9 @@ const ProductCard = ({ product }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -8 }}
-      className="group bg-zinc-900 border border-zinc-800 hover:border-orange-500/30 rounded-3xl overflow-hidden shadow-lg transition-all duration-300 flex flex-col h-full"
+      className="group bg-white/60 dark:bg-zinc-900 border border-orange-500/10 dark:border-zinc-800 hover:border-orange-500/40 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-md transition-all duration-300 flex flex-col h-full backdrop-blur-sm"
     >
-      <div className="relative aspect-square overflow-hidden bg-zinc-950/50">
+      <div className="relative aspect-square overflow-hidden bg-orange-50/50 dark:bg-zinc-950/50">
         {product.images?.[0] ? (
           <img 
             src={product.images[0]} 
@@ -59,18 +59,18 @@ const ProductCard = ({ product }) => {
           <span className="text-xs font-mono text-zinc-500">{product.sku}</span>
         </div>
         
-        <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-orange-400 transition-colors">
+        <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2 line-clamp-1 group-hover:text-orange-400 transition-colors">
           {product.name}
         </h3>
         
-        <p className="text-zinc-400 text-sm mb-6 line-clamp-2 flex-1">
+        <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6 line-clamp-2 flex-1">
           {product.description}
         </p>
         
         <div className="flex items-end justify-between mt-auto">
           <div>
             <div className="text-xs text-zinc-500 mb-1">Price</div>
-            <div className="text-2xl font-black text-white">
+            <div className="text-2xl font-black text-zinc-900 dark:text-white">
               ₹{product.price}
             </div>
           </div>
@@ -80,8 +80,8 @@ const ProductCard = ({ product }) => {
             disabled={product.stock === 0}
             className={`flex items-center justify-center gap-2 px-4 py-3 rounded-2xl font-bold transition-all ${
               product.stock === 0 
-                ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
-                : 'bg-white hover:bg-orange-500 text-zinc-950 hover:text-white shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(249,115,22,0.3)]'
+                ? 'bg-orange-50 dark:bg-zinc-800 text-orange-300 dark:text-zinc-500 cursor-not-allowed'
+                : 'bg-orange-500 dark:bg-white hover:bg-orange-600 dark:hover:bg-orange-500 text-white dark:text-zinc-950 shadow-md hover:shadow-xl'
             }`}
           >
             <ShoppingCart className="h-5 w-5" />

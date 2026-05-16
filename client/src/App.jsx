@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Pages
 import Login from './pages/Login';
@@ -13,16 +14,29 @@ import POS from './pages/POS';
 import AdminProducts from './pages/AdminProducts';
 import AdminOrders from './pages/AdminOrders';
 import AdminDashboard from './pages/AdminDashboard';
+import NotFound from './pages/NotFound';
+import Contact from './pages/Contact';
 
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
+// Layout for Public Pages
+const PublicLayout = ({ children }) => {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  );
+};
+
 // Protected Route Component
 const ProtectedRoute = ({ children, roles }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <div className="h-screen w-screen flex items-center justify-center bg-zinc-950 text-white">Loading...</div>;
+  if (loading) return <div className="h-screen w-screen flex items-center justify-center bg-zinc-950 text-white font-black uppercase tracking-widest">Loading...</div>;
   if (!user) return <Navigate to="/login" />;
   if (roles && !roles.includes(user.role)) return <Navigate to="/" />;
 
@@ -37,32 +51,29 @@ const ProtectedRoute = ({ children, roles }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
+    <ThemeProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
         <Routes>
+          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          } />
-          <Route path="/products" element={
-            <ProtectedRoute>
-              <Products />
-            </ProtectedRoute>
-          } />
-          <Route path="/cart" element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          } />
+
+          {/* Public Routes */}
+          <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+          <Route path="/products" element={<PublicLayout><Products /></PublicLayout>} />
+          <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+          <Route path="/cart" element={<PublicLayout><Cart /></PublicLayout>} />
+
+          {/* Protected Customer Routes */}
           <Route path="/checkout" element={
             <ProtectedRoute>
               <Checkout />
             </ProtectedRoute>
           } />
+
+          {/* Protected Admin Routes */}
           <Route path="/admin" element={
             <ProtectedRoute roles={['admin']}>
               <AdminDashboard />
@@ -83,11 +94,14 @@ function App() {
               <POS />
             </ProtectedRoute>
           } />
-          {/* Add more admin routes here */}
+
+          {/* 404 Route */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
-    </CartProvider>
-  </AuthProvider>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
+  </ThemeProvider>
   );
 }
 

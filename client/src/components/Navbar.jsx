@@ -1,13 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { ShoppingCart, User, LogOut, Menu, X, Sparkles } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { ShoppingCart, User, LogOut, Menu, X, Sparkles, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const { cartCount } = useCart();
+  const { isDarkMode, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -31,7 +33,7 @@ const Navbar = () => {
       <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled 
-            ? 'bg-zinc-950/80 backdrop-blur-lg border-b border-white/10 shadow-lg' 
+            ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-lg border-b border-black/5 dark:border-white/10 shadow-lg' 
             : 'bg-transparent border-transparent'
         }`}
       >
@@ -42,23 +44,32 @@ const Navbar = () => {
               <div className="bg-orange-500 p-2 rounded-xl group-hover:bg-orange-400 transition-colors">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <span className="text-2xl font-black tracking-tight text-white">
+              <span className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">
                 CRACKERS
               </span>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
-              <Link to="/" className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Home</Link>
-              <Link to="/products" className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Products</Link>
+              <Link to="/" className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all">Home</Link>
+              <Link to="/products" className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all">Products</Link>
+              <Link to="/contact" className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all">Contact</Link>
               {user?.role === 'admin' && (
-                <Link to="/admin" className="px-4 py-2 text-sm font-medium text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-full transition-all">Admin Dashboard</Link>
+                <Link to="/admin" className="px-4 py-2 text-sm font-medium text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 hover:bg-orange-500/10 rounded-full transition-all">Admin Dashboard</Link>
               )}
             </div>
             
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link to="/cart" className="text-zinc-300 hover:text-white relative group p-2">
+              
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all"
+              >
+                {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+
+              <Link to="/cart" className="text-zinc-600 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-white relative group p-2">
                 <ShoppingCart className="h-6 w-6 transition-transform group-hover:scale-110" />
                 {cartCount > 0 && (
                   <span className="absolute 0 top-0 right-0 bg-orange-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ring-2 ring-zinc-950 shadow-lg shadow-orange-500/50">
@@ -71,16 +82,16 @@ const Navbar = () => {
 
               {user ? (
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/10 text-zinc-300">
+                  <div className="flex items-center space-x-2 bg-black/5 dark:bg-white/5 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-zinc-700 dark:text-zinc-300">
                     <User className="h-4 w-4 text-orange-500" />
                     <span className="text-sm font-medium pr-2">{user.name}</span>
                   </div>
-                  <button onClick={logout} className="p-2 text-zinc-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all">
+                  <button onClick={logout} className="p-2 text-zinc-500 dark:text-zinc-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all">
                     <LogOut className="h-5 w-5" />
                   </button>
                 </div>
               ) : (
-                <Link to="/login" className="bg-white text-zinc-950 hover:bg-zinc-200 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                <Link to="/login" className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 hover:bg-zinc-800 dark:hover:bg-zinc-200 px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg">
                   Login / Sign Up
                 </Link>
               )}
@@ -88,6 +99,13 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-4">
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-zinc-300 hover:bg-white/10 rounded-full transition-colors"
+              >
+                {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+              
               <Link to="/cart" className="text-zinc-300 relative p-2">
                 <ShoppingCart className="h-6 w-6" />
                 {cartCount > 0 && (
@@ -123,11 +141,11 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-sm bg-zinc-950 border-l border-white/10 z-[60] md:hidden shadow-2xl flex flex-col"
+              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-sm bg-white dark:bg-zinc-950 border-l border-black/10 dark:border-white/10 z-[60] md:hidden shadow-2xl flex flex-col"
             >
-              <div className="p-6 flex justify-between items-center border-b border-white/10">
-                <span className="text-xl font-bold text-white">Menu</span>
-                <button onClick={() => setIsOpen(false)} className="p-2 bg-white/5 rounded-full text-zinc-400 hover:text-white">
+              <div className="p-6 flex justify-between items-center border-b border-black/10 dark:border-white/10">
+                <span className="text-xl font-bold text-zinc-900 dark:text-white">Menu</span>
+                <button onClick={() => setIsOpen(false)} className="p-2 bg-black/5 dark:bg-white/5 rounded-full text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
                   <X className="h-5 w-5" />
                 </button>
               </div>
@@ -135,6 +153,7 @@ const Navbar = () => {
               <div className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
                 <Link to="/" className="block px-4 py-3 rounded-xl text-zinc-300 hover:bg-white/5 hover:text-white font-medium transition-all">Home</Link>
                 <Link to="/products" className="block px-4 py-3 rounded-xl text-zinc-300 hover:bg-white/5 hover:text-white font-medium transition-all">Products</Link>
+                <Link to="/contact" className="block px-4 py-3 rounded-xl text-zinc-300 hover:bg-white/5 hover:text-white font-medium transition-all">Contact</Link>
                 {user?.role === 'admin' && (
                   <Link to="/admin" className="block px-4 py-3 rounded-xl text-orange-400 hover:bg-orange-500/10 font-medium transition-all mt-4 border border-orange-500/20">Admin Dashboard</Link>
                 )}
