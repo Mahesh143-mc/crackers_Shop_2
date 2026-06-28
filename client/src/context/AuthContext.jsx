@@ -1,5 +1,13 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { auth, db } from '../firebase';
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged,
+  updateProfile
+} from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -10,50 +18,81 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetchUser(token);
-    } else {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Fetch additional user info (like role) from Firestore
+        const userDocRef = doc(db, 'users', firebaseUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        let userData = {
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName || 'User',
+          email: firebaseUser.email,
+          role: 'user', // default role
+        };
+
+        if (userDoc.exists()) {
+          userData = { ...userData, ...userDoc.data() };
+          // Automatically grant admin role to the specified email
+          if (firebaseUser.email === 'kmahesh10634@gmail.com') {
+            userData.role = 'admin';
+            if (userDoc.data().role !== 'admin') {
+              await setDoc(userDocRef, { role: 'admin' }, { merge: true });
+            }
+          }
+        } else {
+          // If no doc exists for some reason, we can create one
+          if (firebaseUser.email === 'kmahesh10634@gmail.com') {
+            userData.role = 'admin';
+          }
+          await setDoc(userDocRef, userData);
+        }
+
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
-    }
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const fetchUser = async (token) => {
-    try {
-      const res = await axios.get('http://localhost:5000/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setUser(res.data.data.user);
-    } catch (err) {
-      localStorage.removeItem('token');
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const login = async (email, password) => {
-    const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.data.user);
-    return res.data;
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    // User state will be updated by onAuthStateChanged
+    return userCredential.user;
   };
 
   const signup = async (userData) => {
-    const res = await axios.post('http://localhost:5000/api/auth/register', userData);
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.data.user);
-    return res.data;
+    const { name, email, password } = userData;
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Update profile with name
+    await updateProfile(userCredential.user, {
+      displayName: name
+    });
+
+    // Create user document in Firestore with role 'user'
+    const newUserDoc = {
+      id: userCredential.user.uid,
+      name: name,
+      email: email,
+      role: 'user'
+    };
+    
+    await setDoc(doc(db, 'users', userCredential.user.uid), newUserDoc);
+    
+    return userCredential.user;
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
+  const logout = async () => {
+    await signOut(auth);
   };
 
   return (
     <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

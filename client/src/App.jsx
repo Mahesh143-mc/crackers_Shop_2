@@ -4,22 +4,24 @@ import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
 
 // Pages
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import POS from './pages/POS';
-import AdminProducts from './pages/AdminProducts';
-import AdminOrders from './pages/AdminOrders';
-import AdminDashboard from './pages/AdminDashboard';
+import Login from './pages/user/Login';
+import AdminLogin from './pages/admin/AdminLogin';
+import Signup from './pages/user/Signup';
+import Home from './pages/user/Home';
+import Products from './pages/user/Products';
+import Cart from './pages/user/Cart';
+import Checkout from './pages/user/Checkout';
+import POS from './pages/admin/POS';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import NotFound from './pages/NotFound';
-import Contact from './pages/Contact';
+import Contact from './pages/user/Contact';
 
 // Components
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
+import ScrollToTop from './components/common/ScrollToTop';
 
 // Layout for Public Pages
 const PublicLayout = ({ children }) => {
@@ -55,9 +57,11 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <Router>
+            <ScrollToTop />
         <Routes>
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/signup" element={<Signup />} />
 
           {/* Public Routes */}

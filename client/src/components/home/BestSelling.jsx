@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ProductCard from '../ProductCard';
+import { db } from '../../firebase';
+import { collection, getDocs, query, limit } from 'firebase/firestore';
+import ProductCard from '../product/ProductCard';
 import { motion } from 'framer-motion';
 import { Loader2, Flame, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -12,8 +13,13 @@ const BestSelling = () => {
   useEffect(() => {
     const fetchTopProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products');
-        setProducts(res.data.data.products.slice(0, 4).map(p => ({...p, isBestSeller: true})));
+        const q = query(collection(db, 'products'), limit(4));
+        const querySnapshot = await getDocs(q);
+        const fetchedProducts = [];
+        querySnapshot.forEach((doc) => {
+          fetchedProducts.push({ id: doc.id, _id: doc.id, ...doc.data(), isBestSeller: true });
+        });
+        setProducts(fetchedProducts);
       } catch (err) {
         console.error(err);
       } finally {
